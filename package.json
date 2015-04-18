@@ -26,6 +26,7 @@
     "mysql": "^2.6.2",
     "passport": "^0.2.1",
     "passport-http-bearer": "^1.0.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "underscore": "^1.8.3"
   }
 }

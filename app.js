@@ -12,7 +12,7 @@ var express         = require('express'),
     BearerStrategy	= require('passport-http-bearer').Strategy,
     LocalStrategy	= require('passport-local').Strategy,
 
-    config			= require('./config'),
+    config			= require('./config')
 	;
 
 console.log();
