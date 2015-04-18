@@ -86,7 +86,7 @@ This is the public-exposed directory that contains all your static asset like im
 
 ## Installing Web Dependencies
 
-You can install web dependencies using Bower. All dependencies will be installed on `components` sub-directory inside `public` directory.
+You can install web dependencies using Bower. All dependencies will be installed on `components` sub-directory inside `public` directory. Don't forget to add additional parameter `--save` to ensure that the new dependency will be persisted to `bower.json` file.
 
 ## Controllers and Actions
 
@@ -94,56 +94,64 @@ This framework using Controller, and View to serve your apps. First, Controller 
 
 To create new controller, you'll need to define a controller function and exports it.
 
-# Tutorial: Simple Blog
-
-Let's say you want to create a new controller called Posts Controller that can view all posts inside a table named `posts`, then you'll do the following step.
-
-First, create new directory inside `controllers` directory and create a sub-directory named `posts`. Remember that your directory name also define your controller name. You can change it later using `name` property for `actions` object that we'll cover later, but for now, let's do this. Your controller file name must be the same to your directory, and suffixed with `_controller`.  
-
 ```javascript
-/* File: controllers/posts/posts_controller.js */
-var controller = function(args) {
-    var db          = args.connector;
-    var commonPages = args.pages;
-    
+function controller = function(args) {
     var actions = {};
-
-    actions.index = {
-        method  : 'get',
-        path    : '/',
-        handler : function(req, res, next) {
-            // Query to the database.
-            var strQuery = 'SELECT * FROM posts;';
-            db.query(strQuery, function(err, rows, fields) {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).render(commonPages.ERROR);
-                }
-                else {
-                    // This will render index.jade inside your `views` directory.
-                    return res.status(200).render('index', {
-                        posts: rows        
-                    }); 
-                }
-            });
-        }
-    }
-
+    
+    // Do something with the actions object.
+    
     return actions;
 };
 
 module.exports = controller;
 ```
 
-After that, create a view file inside `views` directory that you should put inside your `controller/posts` directory. Every controller has its own `views` directory.
+Every controller has action that each of it representing 1 request and 1 url. 
+
+Let's say you have url list below:
 
 ```
-/* File: controller/posts/views/index.jade */
-
-h1 Posts
-each post in posts
-    h2 post.title
-    p post.content
-
+GET  /users/login
+POST /users/login
+POST /api/users/authenticate
 ```
 
+Then, this can be represented using the following controller:
+
+```javascript
+var controller = function(args) {
+    var actions = {};
+    
+    actions.login = [
+        {
+            method  : 'get',
+            path    : '/login',
+            handler : function(req, res, next) {
+                // Do something here.
+            }
+        },
+        {
+            method  : 'post',
+            path    : '/login',
+            handler : function(req, res, next) {
+                // Do something here.
+            }
+        }
+    ];
+    
+    actions.authenticate = {
+        method  : 'post',
+        prefix  : 'api',
+        path    : 'authenticate',
+        handler : function(req, res, next) {
+            // Do something here.
+        }
+    };
+};
+
+module.exports = controller;
+```
+
+# Feedback
+
+If you've any feedback, or encounter some errors, don't hesitate to put something in Issues Page.
