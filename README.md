@@ -9,7 +9,7 @@ Follow the instructions below to start your server.
 
 In root directory, create new file named `config.js`. Change the settings to your own need.
 
-```
+```javascript
 /* File: config.js */
 module.exports = {
     app : {
@@ -37,14 +37,13 @@ The `app` section define your app information, `mysql` for data source configura
 
 Open your command prompt (Node.js command prompt if you use Windows), `cd` to the root directory of your server and type the following command:
 
-```
+```shell
 npm install
-
 ```
 
 And to install web dependencies, type the following command:
 
-```
+```shell
 bower install
 
 ```
@@ -53,16 +52,14 @@ bower install
 
 First, to make your development easy, it's recommended for you to install `nodemon` using `npm`.
 
-```
+```shell
 npm install -g nodemon
-
 ```
 
 After that, you can start the server using the following command:
 
-```
+```shell
 nodemon app.js
-
 ```
 
 # Creating Your Apps
@@ -103,7 +100,7 @@ Let's say you want to create a new controller called Posts Controller that can v
 
 First, create new directory inside `controllers` directory and create a sub-directory named `posts`. Remember that your directory name also define your controller name. You can change it later using `name` property for `actions` object that we'll cover later, but for now, let's do this. Your controller file name must be the same to your directory, and suffixed with `_controller`.  
 
-```
+```javascript
 /* File: controllers/posts/posts_controller.js */
 var controller = function(args) {
     var db          = args.connector;
