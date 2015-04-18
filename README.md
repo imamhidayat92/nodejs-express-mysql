@@ -66,11 +66,11 @@ nodemon app.js
 
 ## Know Inside
 
-This framework use Express 4.x, and has been integrated to use Jade (for view file) and Passport (for authentication related process). It's also has been configured to properly serve resources with `access_token` authentication using Passport HTTP Bearer. All connected to a MySQL database data source.
+This framework use Express 4, and has been integrated to use Jade (for view files) and Passport (for authentication related process). It's also has been configured to properly serve resources with `access_token` query string. All connected to a MySQL database data source.
 
 ## Directory Structure
 
-There are 3 main directories that you can use. There are `controllers`,  `public`, and `views`. The `node_modules` directory is used to save Node.js dependency, so don't mess with it. The `libs` directory contains logic to boot up your server and authenticate request.
+There are 3 main directories that you can use. There are `controllers`,  `public`, and `views`. The `node_modules` directory is used to save Node.js dependency, so don't mess with it. The `libs` directory contains logic to boot up the server and authenticate request.
 
 ### `controllers` Directory
 
@@ -106,7 +106,7 @@ function controller = function(args) {
 module.exports = controller;
 ```
 
-Every controller has action that each of it representing 1 request and 1 url. 
+Every controller has action that each of it representing 1 or several urls. It also has 1 `views` folder that can be used to display a view. 
 
 Let's say you have url list below:
 
@@ -151,6 +151,12 @@ var controller = function(args) {
 
 module.exports = controller;
 ```
+
+You can see that 1 action can be represented using an array, or an object.
+
+## Extending The Framework
+
+This framework is just a simple framework that can make your work easier. To extend the framework, feel free to see how everything works. Actually, this is very simple. You can see how the logic works in `boot.js` file, and how the authentication when a request processed in `auth.js` file. Beside than that, you can see `app.js` file to see how the component initialized, and at the end, you can just modify and improve to make it your own framework.
 
 # Feedback
 
