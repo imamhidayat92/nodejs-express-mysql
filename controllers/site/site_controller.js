@@ -1,6 +1,4 @@
 var controller = function(args) {
-    var db = args.connector;
-
     var actions = {};
 
     /* 
