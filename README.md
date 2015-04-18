@@ -147,12 +147,72 @@ var controller = function(args) {
             // Do something here.
         }
     };
+    
+    return actions;
 };
 
 module.exports = controller;
 ```
 
 You can see that 1 action can be represented using an array, or an object.
+
+Every controller is being called with one parameter named `args` that contains some important objects that can be used throughout your application. `args` contain several objects: 
+
+* `config` that contain configuration object that you've defined first time.
+* `connector` that contain connection object to MySQL data source. You can execute query using it. It's a connection object that is created using `mysql` module when the server started.
+
+```javascript
+var controller = function(args) {
+    var db = args.connector;
+    
+    actions.someAction = {
+        method  : 'get',
+        path    : '/anAction',
+        handler : function(req, res, next) {
+            // Let's say we want to get all posts from `posts` table.
+            db.query('SELECT * FROM posts', function(err, rows, fields) [
+                if (err) {
+                    // Handle error.
+                }
+                else {
+                    // Do something with the data.
+                }
+            });
+        }
+    };
+};
+
+module.exports = controller;
+```
+
+* `pages` that contain common pages `INTERNAL_SERVER_ERROR`, `FORBIDDEN`, and `NOT_FOUND` page. If you want to display the errors, just use the this parameter.
+
+```javascript
+var controller = function(args) {
+    var pages = args.pages;
+    
+    var actions = {};
+    
+    actions.someAction = {
+        method  : 'get',
+        path    : '/anAction',
+        handler : function(req, res, next) {
+            if (/* Some error conditions */) {
+                res.render(pages.INTERNAL_SERVER_ERROR, {
+                    title: 'Error!'
+                });
+            }
+            else {
+                // Do something else.
+            }
+        }
+    };
+    
+    return actions;
+};
+
+module.exports = controller;
+```
 
 ## Extending The Framework
 
