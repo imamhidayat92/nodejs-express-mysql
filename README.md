@@ -106,7 +106,7 @@ function controller = function(args) {
 module.exports = controller;
 ```
 
-Every controller has action that each of it representing 1 or several urls. It also has 1 `views` folder that can be used to display a view. 
+Every controller has action that each of it representing 1 or several urls. It also has a `views` folder that can be used to display a view. 
 
 Let's say you have url list below:
 
@@ -154,7 +154,13 @@ var controller = function(args) {
 module.exports = controller;
 ```
 
-You can see that 1 action can be represented using an array, or an object.
+You can see that 1 action can be represented using an array, or an object. An action can contains several action objects or have exactly 1 action object. An action object should contain at least 3 attributes: `method`, `path` and `handler`. A complete list is shown below:
+
+* `method` that define HTTP method that you can use. Express support HTTP method like `GET`, `POST` and `PUT` for example.
+* `path` that define the path to access the action. The `path` later can be accessed by attaching its controller name before the path.
+* `handler` that define the function that will handle the request. It should contain a function that accept at least 2 arguments `req` and `res`, and can accept at most 3 arguments `req`, `res`, and `next`. This will be passed to Express to handle the rest.
+* `before` that define what should be called before calling the `handler` function. It should contain a function that has the same definition with `handler` function above.
+* `prefix` that define the prefix before the url is called.
 
 Every controller is being called with one parameter named `args` that contains some important objects that can be used throughout your application. `args` contain several objects: 
 
@@ -165,9 +171,15 @@ Every controller is being called with one parameter named `args` that contains s
 var controller = function(args) {
     var db = args.connector;
     
-    actions.someAction = {
+    var actions = {};
+    
+    actions.name = 'a_controller';
+    
+    actions.someAction = 
+    // GET /a_controller/an_action
+    {
         method  : 'get',
-        path    : '/anAction',
+        path    : 'an_action',
         handler : function(req, res, next) {
             // Let's say we want to get all posts from `posts` table.
             db.query('SELECT * FROM posts', function(err, rows, fields) [
@@ -180,6 +192,8 @@ var controller = function(args) {
             });
         }
     };
+    
+    return actions;
 };
 
 module.exports = controller;
